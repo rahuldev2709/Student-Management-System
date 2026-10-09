@@ -1,0 +1,121 @@
+
+#include <stdio.h>
+
+struct Student
+{
+    int id;
+    char name[50];
+    float marks;
+};
+
+void addStudent(struct Student s[], int *count)
+{
+    if (*count >= 50)
+    {
+        printf("\nStudent list is full!\n");
+        return;
+    }
+
+    printf("\nEnter Student ID: ");
+    scanf("%d", &s[*count].id);
+
+    printf("Enter Student Name: ");
+    scanf(" %49[^\n]", s[*count].name);
+
+    printf("Enter Marks: ");
+    scanf("%f", &s[*count].marks);
+
+    (*count)++;
+
+    printf("\nStudent added successfully!\n");
+}
+
+void displayStudents(struct Student s[], int count)
+{
+    int i;
+
+    if (count == 0)
+    {
+        printf("\nNo students available!\n");
+        return;
+    }
+
+    printf("\n--- Student Records ---\n");
+
+    for (i = 0; i < count; i++)
+    {
+        printf("\nID: %d\n", s[i].id);
+        printf("Name: %s\n", s[i].name);
+        printf("Marks: %.2f\n", s[i].marks);
+    }
+}
+
+void searchStudent(struct Student s[], int count)
+{
+    int id, i, found = 0;
+
+    printf("\nEnter Student ID to search: ");
+    scanf("%d", &id);
+
+    for (i = 0; i < count; i++)
+    {
+        if (s[i].id == id)
+        {
+            printf("\nStudent Found!\n");
+            printf("Name: %s\n", s[i].name);
+            printf("Marks: %.2f\n", s[i].marks);
+
+            found = 1;
+            break;
+        }
+    }
+
+    if (found == 0)
+    {
+        printf("\nStudent not found!\n");
+    }
+}
+
+int main()
+{
+    struct Student s[50];
+    int count = 0;
+    int choice;
+
+    do
+    {
+        printf("\n===== STUDENT MANAGEMENT SYSTEM =====\n");
+        printf("1. Add Student\n");
+        printf("2. Display Students\n");
+        printf("3. Search Student\n");
+        printf("4. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                addStudent(s, &count);
+                break;
+
+            case 2:
+                displayStudents(s, count);
+                break;
+
+            case 3:
+                searchStudent(s, count);
+                break;
+
+            case 4:
+                printf("\nThank you!\n");
+                break;
+
+            default:
+                printf("\nInvalid choice!\n");
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
